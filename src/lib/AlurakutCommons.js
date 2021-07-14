@@ -174,7 +174,6 @@ function AlurakutMenuProfileSidebar({ githubUser }) {
           </a>
         </p>
         <hr />
-
         <AlurakutProfileSidebarMenuDefault />
       </div>
     </div>
