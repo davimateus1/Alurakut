@@ -26,12 +26,34 @@ function ProfileSidebar(proprieties) {
   );
 }
 
+function ProfileRelationsBox(propriedades){
+  return(
+    <ProfileRelationsBoxWrapper>
+    <h2 className="smallTitle">
+      {propriedades.title} ({propriedades.items.length})
+      </h2>
+      <ul>
+        {/* seguidores.map((itemAtual) => {
+          return (
+            <li key={itemAtual}>
+              <a href={`https://github.com/${itemAtual}`}>
+                <img src={itemAtual.image} />
+                <span> {itemAtual.title} </span>
+              </a>
+            </li>
+          );
+        }) */}
+      </ul>
+    </ProfileRelationsBoxWrapper>
+  )
+}
+
 export default function Home() {
 
   const [comunidades, setComunidades] = React.useState([{
     id: '123123123123',
     title: 'Eu odeio acordar cedo',
-    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
+    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg', 
   }]);
 
   const usuarioGithub = "davimateus1";
@@ -43,11 +65,26 @@ export default function Home() {
     "lucass235",
     "rafaelpdemelo",
     "joovitor12",
+    "diego3g"
   ];
+
+  const [seguidores, setSeguidores] = React.useState([]);
+
+  fetch('https://api.github.com/users/davimateus1/followers')
+  .then(function (respostaDoServidor){
+    return respostaDoServidor.json();
+  })
+  .then(function(respostaCompleta){
+    setSeguidores(respostaCompleta);
+  })
+  
+  React.useEffect(function(){
+
+  }, [])
 
   return (
     <>
-      <AlurakutMenu />
+      <AlurakutMenu githubUser={usuarioGithub}/>
       <MainGrid>
         <div className="profileArea" style={{ gridArea: "profileArea" }}>
           <ProfileSidebar githubUser={usuarioGithub} />
@@ -105,12 +142,15 @@ export default function Home() {
           className="profileRelationsArea"
           style={{ gridArea: "profileRelationsArea" }}
         >
+          
+          <ProfileRelationsBox title ="Seguidores" items={seguidores} />
+
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
               Pessoas das Comunidades ({pessoasFav.length})
             </h2>
             <ul>
-              {pessoasFav.map((itemAtual) => {
+              {pessoasFav.slice(0,6).map((itemAtual) => {
                 return (
                   <li key={itemAtual}>
                     <a href={`/users/${itemAtual}`}>

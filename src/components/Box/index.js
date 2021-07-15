@@ -44,11 +44,13 @@ input {
   padding: 14px 16px;
   margin-bottom: 14px;
   border-radius: 10000px;
+
   ::placeholder {
     color: #333333;
     opacity: 1;
   }
 }
+
 button {
   border: 0;
   padding: 8px 12px;
