@@ -28,23 +28,23 @@ function ProfileSidebar(proprieties) {
   );
 }
 
-function ProfileRelationsBox(propriedades){
-  return(
-    <ProfileRelationsBoxWrapper>
-    <h2 className="smallTitle">
-      {propriedades.title} ({propriedades.items.length})
+function ProfileRelationsBox(propriedades) {
+  return (
+     <ProfileRelationsBoxWrapper>
+      <h2 className="smallTitle">
+        {propriedades.title} ({propriedades.items.length})
       </h2>
       <ul>
-        {/* propriedades.map((itemAtual) => {
+         {propriedades.items.slice(0,6).map((itemAtual) => {
           return (
-            <li key={itemAtual}>
-              <a href={`https://github.com/${itemAtual}`}>
-                <img src={itemAtual.image} />
-                <span> {itemAtual.title} </span>
+            <li key={itemAtual.id}>
+              <a href={itemAtual.html_url} target="_blank" rel="">
+                <img src={itemAtual.avatar_url} />
+                <span>{itemAtual.login}</span>
               </a>
             </li>
-          );
-        }) */}
+          ); 
+        })}
       </ul>
     </ProfileRelationsBoxWrapper>
   )
@@ -149,9 +149,37 @@ export default function Home(props) {
                  const comunidadesAtualizadas = [...comunidades, comunidade];
                  setComunidades(comunidadesAtualizadas);
                 })
-
-
               }}
+
+               onSubmit={function handleCreateCommunity(e) {
+                e.preventDefault();
+                const dadosDoForm = new FormData(e.target);
+
+                console.log ('Campo: ', dadosDoForm.get('title'));
+                console.log ('Campo: ', dadosDoForm.get('image'));
+
+                const comunidade = {
+                  title: dadosDoForm.get('title'),
+                  imageUrl: dadosDoForm.get('image'),
+                  creatorSlug: usuarioGithub,
+                }
+
+                fetch('/api/comunidades', {
+                  method: 'POST',
+                  headers:{
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(comunidade)
+                })
+                .then (async (response) => {
+                 const dados = await response.json();
+                 console.log (dados.registroCriado);
+                 const comunidade = dados.registroCriado;
+                 const comunidadesAtualizadas = [...comunidades, comunidade];
+                 setComunidades(comunidadesAtualizadas);
+                })
+              }}
+              
             >
               <div>
                 <input
@@ -159,20 +187,21 @@ export default function Home(props) {
                   name="title"
                   aria-label="Qual será o nome da sua comunidade?"
                   type="text"
+                  required
                 />
               </div>
-
               <div>
                 <input
                   placeholder="Informe a capa através de uma URL"
                   name="image"
                   aria-label="Informe a capa através de uma URL"
+                  required
                 />
               </div>
 
               <button>Criar comunidade</button>
             </form>
-          </Box>
+          </Box>        
         </div>
         <div
           className="profileRelationsArea"
