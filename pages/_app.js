@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background-image: url('https://images8.alphacoders.com/357/thumb-1920-357185.jpg');
-   
+    background-size: cover;
     background-repeat: no-repeat;
     font-family: sans-serif;
   }
