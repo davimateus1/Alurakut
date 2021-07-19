@@ -9,8 +9,9 @@ export default function LoginPage() {
   const [githubUser, setGithubUser] = React.useState('');
 
 
-    return  (
+    return  (      
         <main style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <title>Alurakut: Login</title>
           <div className="loginScreen">
             <section className="logoArea">
               <img src="https://alurakut.vercel.app/logo.svg" />

@@ -6,9 +6,12 @@ import jwt from 'jsonwebtoken';
 import { AlurakutMenu,AlurakutProfileSidebarMenuDefault,OrkutNostalgicIconSet } from "../src/lib/AlurakutCommons";
 import { ProfileRelationsBoxWrapper } from "../src/components/ProfileRelations";
 
+
+
 function ProfileSidebar(proprieties) {
   return (
     <Box as="aside">
+      <title>Pagina Alurakut</title>
       <img
         src={`https://github.com/${proprieties.githubUser}.png`}
         style={{ borderRadius: "8px" }}
