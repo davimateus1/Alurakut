@@ -10,7 +10,9 @@ const GlobalStyle = createGlobalStyle`
 }
 
   body {
-    background-color: #87CEEB;
+    background-image: url('https://images8.alphacoders.com/357/thumb-1920-357185.jpg');
+   
+    background-repeat: no-repeat;
     font-family: sans-serif;
   }
 

@@ -1,6 +1,14 @@
+import React from 'react';
+// Hook do NextJS, se tem "use" podemos dizer que é um Hook
+import { useRouter } from 'next/router';
+import nookies from 'nookies';
 
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [githubUser, setGithubUser] = React.useState('');
+
+
     return  (
         <main style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <div className="loginScreen">
@@ -13,16 +21,39 @@ export default function LoginPage() {
             </section>
     
             <section className="formArea">
-              <form className="box">
+              <form className="box" onSubmit={(infosDoEvento) =>{
+                infosDoEvento.preventDefault();
+                console.log('Usuário: ', githubUser)
+                fetch('https://alurakut.vercel.app/api/login', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ githubUser: githubUser })
+                })
+                .then(async (respostaDoServer) => {
+                  const dadosDaResposta = await respostaDoServer.json()
+                  const token = dadosDaResposta.token;
+                  nookies.set(null, 'USER_TOKEN', token, {
+                    path: '/',
+                    maxAge: 86400 * 7
+                  })
+                  router.push('/')
+                })
+              }}>
                 <p>
                   Acesse agora mesmo com seu usuário do <strong>GitHub</strong>!
               </p>
-                <input
-                    placeholder="Usuário"
+                <input 
+                placeholder="Usuário" 
+                value={githubUser}
+                onChange={(evento) => {
+                  setGithubUser(evento.target.value)
+                }
+                }
+                required
                 />
-                <button onClick={() => {
-
-                }} type="submit">
+                <button type="submit">
                   Login
                 </button>
               </form>
@@ -41,7 +72,7 @@ export default function LoginPage() {
     
             <footer className="footerArea">
               <p>
-                © 2021 alura.com.br - <a href="/">Sobre o Orkut.br</a> - <a href="/">Centro de segurança</a> - <a href="/">Privacidade</a> - <a href="/">Termos</a> - <a href="/">Contato</a>
+                © 2021 alura.com.br - <a href="/">Sobre o Alukarut.br</a> - <a href="/">Centro de segurança</a> - <a href="/">Privacidade</a> - <a href="/">Termos</a> - <a href="/">Contato</a>
               </p>
             </footer>
           </div>

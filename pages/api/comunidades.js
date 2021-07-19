@@ -8,10 +8,7 @@ export default async function recebeRequests (request, response) {
     
         const registroCriado = await client.items.create({
             itemType: "971587", // ID do modelo de comunidades criado pelo datoCMS 
-            ...request.body,
-            // title: "Comunidade de Teste",
-            // imageUrl: "https://github.com/davimateus1.png",
-            // creatorSlug: "davimateus1"      
+            ...request.body,   
         })
     
         response.json({
