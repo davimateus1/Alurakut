@@ -40,6 +40,9 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [ReactJS](https://reactjs.org)
 - [DatoCMS](https://www.datocms.com)
 - [Nookies](https://www.npmjs.com/package/nookies)
+- [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
+- [Next.js](https://nextjs.org)
+- [Styled Components](https://styled-components.com)
 
 ## 💻 Projeto
 
